@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [
     path('citas/', views.cita_list),
-    path('citasValidate/<int:variable_id>', views.generate_cita),
+    path('citasValidate/<int:hora>/<str:lugar>/', views.generate_cita),
 ]
