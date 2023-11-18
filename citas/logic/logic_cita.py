@@ -2,11 +2,11 @@ from measurements.models import Measurement
 from ..models import Cita
 
 def get_citas():
-    queryset = Cita.objects.all().order_by('-dateTime')
+    queryset = Cita.objects.all().order_by('-hora')
     return (queryset)
 
 def get_measurements_by_variable(variable):
-    queryset = Measurement.objects.filter(variable=variable).order_by('-dateTime')[:10]
+    queryset = Measurement.objects.filter(variable=variable).order_by('-hora')[:10]
     return (queryset)
 
 def create_cita(hora, lugar):
