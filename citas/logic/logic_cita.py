@@ -9,7 +9,7 @@ def get_measurements_by_variable(variable):
     queryset = Measurement.objects.filter(variable=variable).order_by('-dateTime')[:10]
     return (queryset)
 
-def create_appointment(hora, lugar):
+def create_cita(hora, lugar):
     cita = Cita()
     cita.hora = hora
     cita.lugar = lugar

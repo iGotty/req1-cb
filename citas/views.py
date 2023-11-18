@@ -1,14 +1,17 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from .models import Appointment
+from .models import Cita
 
-def schedule_appointment(request, hora, lugar):
+from .logic.logic_cita import get_citas, get_measurements_by_variable
+
+def schedule_cita(request, hora, lugar):
     if 8 <= hora <= 17:
-        appointment = Appointment.objects.create(hora=hora, lugar=lugar)
-        return JsonResponse({'message': 'Appointment created', 'id': appointment.id})
+        cita = Cita.objects.create(hora=hora, lugar=lugar)
+        return JsonResponse({'message': 'Cita created', 'id': cita.id})
     else:
-        return JsonResponse({'message': 'Invalid hour for an appointment'}, status=400)
+        return JsonResponse({'message': 'Invalid hour for a cita'}, status=400)
 
-def appointment_list(request):
-    appointments = Appointment.objects.all().values()
-    return JsonResponse(list(appointments), safe=False)
+def cita_list(request):
+    citas = get_citas()
+    context = list(citas.values())
+    return JsonResponse(context, safe=False)
