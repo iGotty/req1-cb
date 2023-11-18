@@ -4,7 +4,7 @@ from .models import Cita
 
 from .logic.logic_cita import get_citas, get_measurements_by_variable
 
-def schedule_cita(request, hora, lugar):
+def generate_cita(request, hora, lugar):
     if 8 <= hora <= 17:
         cita = Cita.objects.create(hora=hora, lugar=lugar)
         return JsonResponse({'message': 'Cita created', 'id': cita.id})
