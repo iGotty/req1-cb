@@ -1,24 +1,9 @@
 from django.db import models
-from variables.models import Variable
-from measurements.models import Measurement
+from django.core.validators import MinValueValidator, MaxValueValidator
 
-class Cita(models.Model):
-    variable = models.ForeignKey(Variable, on_delete=models.CASCADE, default=None)
-    measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE, default=None)
-    value = models.FloatField(null=True, blank=True, default=None)
-    limitExceeded = models.FloatField(null=True, blank=True, default=None)
-    dateTime = models.DateTimeField(auto_now_add=True)
+class Appointment(models.Model):
+    hora = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(24)])  # Hour of the appointment (1-24)
+    lugar = models.CharField(max_length=200)  # Location of the appointment
 
     def __str__(self):
-        return '{"variable": %s, "measurement": %s, "limitExceeded": %s, "dateTime": %s}' % (self.variable.name, self.measurement.value, self.limitExceeded, self.dateTime)
-    
-    def toJson(self):
-        cita = {
-            'id': self.id,
-            'variable': self.variable.name,
-            'measurement': self.measurement.value,
-            'value': self.value,
-            'dateTime': self.dateTime,
-            'limitExceeded': self.limitExceeded
-        }
-        return cita
+        return f'Appointment at {self.hora}:00 in {self.lugar}'
